@@ -1,4 +1,5 @@
 from functools import reduce
+from operator import mul
 primes = [2, 3, 5, 7, 11, 13, 17, 19]
 ns = list(range(1,21))
 ms = []
@@ -12,4 +13,5 @@ for p in primes:
     ns[i] = n
     return c
   ms.append(max(map(div, range(len(ns)))))
-print(reduce(lambda x, y : x*y, [x**y for (x, y) in zip(primes, ms)]))
+print(reduce(mul, [x**y for (x, y) in zip(primes, ms)]))
+
