@@ -1,6 +1,6 @@
 def fib_even(n):
   """
-  Generate the even Fibonacci numbers.
+  Generate the even Fibonacci numbers up to n.
   
   Every third Fibonacci number is even. This is easy to see by induction:
     odd+odd=even
