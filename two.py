@@ -5,7 +5,7 @@ def fib_even(n):
   Every third Fibonacci number is even. This is easy to see by induction:
     odd+odd=even
     odd+even=odd
-    even+odd=even
+    even+odd=odd
   
   We can easily compute the n+2th and n+3th Fibonacci numbers using the
   n-1th and nth. y is the nth Fibonacci number, and x is the n-1th.
