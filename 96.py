@@ -1,26 +1,32 @@
 from functools import reduce
-from itertools import product
+from itertools import chain, product
 
 empty = '0'
-symbols = '123456789'
+all_symbols = '123456789'
+
+def row(sudoku, r):
+    return sudoku[9*r:9*(r+1)]
+
+def col(sudoku, c):
+    return [sudoku[9*r+c] for r in range(9)]
+
+def box(sudoku, b):
+    br, bc = b//3, b%3
+    return [sudoku[3*(9*br+bc)+9*r+c] for r, c in product(range(3), repeat=2)]
 
 def check(sudoku):
-    def check_set(squares):
+    def check_set(symbols):
         seen = set()
-        for square in squares:
-            if square is not empty:
-                if square in seen:
+        for symbol in symbols:
+            if symbol is not empty:
+                if symbol in seen:
                     return False
-                seen.add(square)
+                seen.add(symbol)
         return True
-    for row in [sudoku[9*r:9*(r+1)] for r in range(9)]:
-        if not check_set(row):
-            return False
-    for col in [[sudoku[9*r+c] for r in range(9)] for c in range(9)]:
-        if not check_set(col):
-            return False
-    for block in [[sudoku[9*3*br+9*r+3*bc+c] for r, c in product(range(3), repeat=2)] for br, bc in product(range(3), repeat=2)]:
-        if not check_set(block):
+    for symbols in chain([row(sudoku, r) for r in range(9)],
+                         [col(sudoku, c) for c in range(9)],
+                         [box(sudoku, b) for b in range(9)]):
+        if not check_set(symbols):
             return False
     return True
 
@@ -32,7 +38,7 @@ def solve(sudoku, i=0):
     if sudoku[i] is not empty:
         return solve(sudoku, i+1)
     # try every possibility for i, recursively
-    for symbol in symbols:
+    for symbol in all_symbols:
         sudoku[i] = symbol
         if check(sudoku):
             guess = solve(sudoku, i+1)
@@ -53,8 +59,7 @@ if __name__ == '__main__':
     # by header lines.
     input = open('p096_sudoku.txt').read().split('\n')[:-1]
     grid_strings = [input[i+1:i+10] for i in range(0, len(input), 10)]
-    #for grid_string in grid_strings:
-    #    unsolved = parse(grid_string)
-    #    solved = solve(unsolved)
-    #    print(pretty(solved))
-    print(sum(map(lambda s: int(''.join(s[:3])), map(solve, map(parse, grid_strings)))))
+    for grid_string in grid_strings:
+        unsolved = parse(grid_string)
+        solved = solve(unsolved)
+        print(pretty(solved))
