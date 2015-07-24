@@ -4,25 +4,44 @@ empty = '0'
 all_symbols = '123456789'
 
 def neighborhood(sudoku, i):
+    """
+    Given a sudoku as a [char; 81] and an index i, return a set containing
+    every value that occurs in i's row, column, or box in the sudoku.
+    """
     row, col = i//9, i%9
     box = row//3*3 + col//3
-    rowset = set(sudoku[row*9 : (row+1)*9])
-    colset = set([sudoku[r*9 + col] for r in range(9)])
-    boxset = set([sudoku[3*(box//3*9 + box%3) + r*9 + c] for r, c in product(range(3), repeat=2)])
-    return rowset | colset | boxset
+    return {sudoku[row*9 + c] for c in range(9)} | \
+           {sudoku[r*9 + col] for r in range(9)} | \
+           {sudoku[3*(box//3*9 + box%3) + r*9 + c] for r, c in product(range(3), repeat=2)}
 
 def best_branch(sudoku):
-    best_choices, best_index = set(all_symbols), None
+    """
+    Given a sudoku as a [char; 81], return the index of the empty spot whose
+    possible values are most restricted, along with its set of possible
+    values. If there are no empty spots, return None in lieu of an index.
+    Possible values are computed by eliminating every value occuring in an
+    index's neighborhood (see above).
+    """
+    best_index, best_choices = None, set(all_symbols)
     for i in range(len(sudoku)):
         if sudoku[i] is not empty:
             continue
         choices = set(all_symbols) - neighborhood(sudoku, i)
         if len(choices) < len(best_choices):
-            best_choices, best_index = choices, i
-    return best_choices, best_index
+            best_index, best_choices = i, choices
+    return best_index, best_choices
 
 def solve(sudoku):
-    choices, index = best_branch(sudoku)
+    """
+    Given a sudoku as a [char; 81], return a solved version of it, or None
+    if it is impossible to solve. Obviously, for every non-empty spot in the
+    input, that spot in the output has the same value; the output has no
+    empty spots; and the output is a valid sudoku.
+    The input is altered: if the sudoku is solvable, the input is transformed
+    into the solved output and returned. If None is returned, then the input
+    is returned to its original state first.
+    """
+    index, choices = best_branch(sudoku)
     if index is None:
         return sudoku
     for symbol in choices:
