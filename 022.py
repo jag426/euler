@@ -1,0 +1,5 @@
+names = open('p022_names.txt').read().split(',')
+names = list(map(lambda name: list(filter(lambda c: c != '"', name)), names))
+names.sort()
+values = list(map(lambda name: sum(map(lambda c: ord(c) - ord('A') + 1, name)), names))
+print(sum(map(lambda x: (x[0]+1)*x[1], enumerate(values))))
