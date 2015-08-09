@@ -47,6 +47,8 @@ def prime_factors(n):
     [2]
     >>> prime_factors(17.0)
     [17]
+    >>> prime_factors(49)
+    [7, 7]
     >>> prime_factors(360)
     [2, 2, 2, 3, 3, 5]
     >>> prime_factors(1234567890987654321)
@@ -76,7 +78,8 @@ def prime_factors(n):
             prime_factors.append(d)
             n //= d
         d += 1
-    prime_factors.append(n)
+    if n > 1:
+        prime_factors.append(n)
     return prime_factors
 
 if __name__ == "__main__":
