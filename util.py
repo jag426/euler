@@ -26,21 +26,37 @@ def divisors(n):
     """
 
     from functools import reduce
-    from itertools import chain, combinations
     from math import floor
-    from util import prime_factorization
+    from util import powerset, prime_factorization
     if floor(n) != n:
         raise ValueError("n must be an integer")
     n = floor(n)
     if not n >= 1:
         raise ValueError("n must be positive")
     pf = prime_factorization(n)
-    powerset = chain.from_iterable(combinations(pf, r) for r in range(len(pf)+1))
+    factor_sets = powerset(pf)
     product = lambda factors: reduce(lambda x,y: x*y, factors, 1)
-    divisors = {product(factors) for factors in powerset}
+    divisors = {product(factors) for factors in factor_sets}
     if n != 1:
         divisors.discard(n)
     return divisors
+
+def powerset(iterable):
+    """An iterable of iterables representing the powerset of the input iterable.
+       Implementation taken from:
+       https://docs.python.org/3/library/itertools.html#itertools-recipes
+
+    >>> list(powerset([]))
+    [()]
+    >>> list(powerset([0]))
+    [(), (0,)]
+    >>> list(powerset([0, 1]))
+    [(), (0,), (1,), (0, 1)]
+    """
+
+    from itertools import chain, combinations
+    s = list(iterable)
+    return chain.from_iterable(combinations(s, r) for r in range(len(s)+1))
 
 def prime_factorization(n):
     """A sorted list of the prime factors of n for any positive integer n.
