@@ -53,9 +53,7 @@ def is_prime(n):
     >>> is_prime(655559*655559)
     False
     >>> is_prime(1)
-    Traceback (most recent call last):
-        ...
-    ValueError: n must be >= 2
+    False
     >>> is_prime(2.5)
     Traceback (most recent call last):
         ...
@@ -67,7 +65,7 @@ def is_prime(n):
         raise ValueError("n must be an integer")
     n = floor(n)
     if not n >= 2:
-        raise ValueError("n must be >= 2")
+        return False
     if n == 2:
         return True
     if n%2 == 0:
