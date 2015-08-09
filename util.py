@@ -41,6 +41,42 @@ def divisors(n):
         divisors.discard(n)
     return divisors
 
+def is_prime(n):
+    """Naive primality test. Return whether n is prime for integer n >= 2.
+
+    >>> is_prime(2)
+    True
+    >>> is_prime(4)
+    False
+    >>> is_prime(655559.0)
+    True
+    >>> is_prime(655559*655559)
+    False
+    >>> is_prime(1)
+    Traceback (most recent call last):
+        ...
+    ValueError: n must be >= 2
+    >>> is_prime(2.5)
+    Traceback (most recent call last):
+        ...
+    ValueError: n must be an integer
+    """
+
+    from math import floor
+    if floor(n) != n:
+        raise ValueError("n must be an integer")
+    n = floor(n)
+    if not n >= 2:
+        raise ValueError("n must be >= 2")
+    if n == 2:
+        return True
+    if n%2 == 0:
+        return False
+    for d in range(3, floor(n**0.5)+1, 2):
+        if n%d == 0:
+            return False
+    return True
+
 def powerset(iterable):
     """An iterable of iterables representing the powerset of the input iterable.
        Implementation taken from:
