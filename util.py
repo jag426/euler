@@ -1,6 +1,5 @@
 def divisors(n):
     """A set of the proper divisors of n for any positive integer n.
-       O(sqrt(n)).
 
     >>> divisors(1)
     {1}
@@ -26,16 +25,21 @@ def divisors(n):
     ValueError: n must be an integer
     """
 
+    from functools import reduce
+    from itertools import chain, combinations
     from math import floor
+    from util import prime_factorization
     if floor(n) != n:
         raise ValueError("n must be an integer")
     n = floor(n)
     if not n >= 1:
         raise ValueError("n must be positive")
-    divisors = {1}
-    for d in range(2, floor(n**0.5)+1):
-        if n%d == 0:
-            divisors |= {d, n//d}
+    pf = prime_factorization(n)
+    powerset = chain.from_iterable(combinations(pf, r) for r in range(len(pf)+1))
+    product = lambda factors: reduce(lambda x,y: x*y, factors, 1)
+    divisors = {product(factors) for factors in powerset}
+    if n != 1:
+        divisors.discard(n)
     return divisors
 
 def prime_factorization(n):
