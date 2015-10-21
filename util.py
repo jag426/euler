@@ -41,6 +41,53 @@ def divisors(n):
         divisors.discard(n)
     return divisors
 
+def gcd(a, b):
+    """Return the greatest common divisor of a and b for integers a and b not
+       both 0.
+
+    >>> gcd(54, 24)
+    6
+    >>> gcd(48, -180)
+    12
+    >>> gcd(-37, 600)
+    1
+    >>> gcd(-13, -13)
+    13
+    >>> gcd(20, 100)
+    20
+    >>> gcd(624129, 2061517)
+    18913
+    >>> gcd(0, 6)
+    6
+    >>> gcd(6, 0)
+    6
+    >>> gcd(0, 0)
+    Traceback (most recent call last):
+        ...
+    ValueError: a or b must not be 0
+    >>> gcd(5.5, 11)
+    Traceback (most recent call last):
+        ...
+    ValueError: a must be an integer
+    >>> gcd(0, 1.5)
+    Traceback (most recent call last):
+        ...
+    ValueError: b must be an integer
+    """
+
+    from math import floor
+    if floor(a) != a:
+        raise ValueError("a must be an integer")
+    a = floor(a)
+    if floor(b) != b:
+        raise ValueError("b must be an integer")
+    b = floor(b)
+    if a == 0 and b == 0:
+        raise ValueError("a or b must not be 0")
+    while b != 0:
+        a, b = b, a % b
+    return abs(a)
+
 def is_prime(n):
     """Naive primality test. Return whether n is prime for integer n >= 2.
 
