@@ -209,6 +209,15 @@ def prime_factorization(n):
 
 primes = postponed_sieve
 
+def primes_to(n):
+    """Generate primes up to n."""
+
+    p = primes()
+    next_prime = next(p)
+    while next_prime <= n:
+        yield next_prime
+        next_prime = next(p)
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
