@@ -122,6 +122,30 @@ def is_prime(n):
             return False
     return True
 
+def postponed_sieve():
+    """A prime generator from http://stackoverflow.com/a/10733621."""
+
+    from itertools import count
+    yield 2; yield 3; yield 5; yield 7;
+    sieve = {}
+    ps = postponed_sieve()
+    p = next(ps) and next(ps)
+    q = p*p
+    for c in count(9, 2):
+        if c in sieve:
+            s = sieve.pop(c)
+        elif c < q:
+            yield c
+            continue
+        else: # c == q
+            s = count(q + 2 * p, 2 * p)
+            p = next(ps)
+            q = p * p
+        for m in s:
+            if m not in sieve:
+                break;
+        sieve[m] = s
+
 def powerset(iterable):
     """An iterable of iterables representing the powerset of the input iterable.
        Implementation taken from:
@@ -182,6 +206,8 @@ def prime_factorization(n):
     if n > 1:
         prime_factorization.append(n)
     return prime_factorization
+
+primes = postponed_sieve
 
 if __name__ == "__main__":
     import doctest
