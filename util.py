@@ -1,3 +1,27 @@
+def digits_10(n):
+    """The number of digits in the decimal representation of any integer n, not
+       including the - sign.
+
+    >>> digits_10(0)
+    1
+    >>> digits_10(199)
+    3
+    >>> digits_10(-12)
+    2
+    >>> digits_10(0.5)
+    Traceback (most recent call last):
+        ...
+    ValueError: n must be an integer
+    """
+
+    from math import floor, log10
+    if floor(n) != n:
+        raise ValueError("n must be an integer")
+    n = floor(n)
+    if n == 0:
+        return 1
+    return int(log10(abs(n))) + 1
+
 def divisors(n):
     """A set of the proper divisors of n for any positive integer n.
 
