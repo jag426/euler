@@ -146,6 +146,41 @@ def is_prime(n):
             return False
     return True
 
+def is_triangle(n):
+    """Return whether n is a triangle number for integer n >= 0.
+       n is a triangle number iff 8n+1 is a square.
+
+    >>> is_triangle(0)
+    True
+    >>> is_triangle(1)
+    True
+    >>> is_triangle(16)
+    False
+    >>> is_triangle(15)
+    True
+    >>> is_triangle(500500)
+    True
+    >>> is_triangle(499513)
+    False
+    >>> is_triangle(-1)
+    Traceback (most recent call last):
+        ...
+    ValueError: n must be non-negative
+    >>> is_triangle(2.5)
+    Traceback (most recent call last):
+        ...
+    ValueError: n must be an integer
+    """
+
+    from math import floor, sqrt
+    if floor(n) != n:
+        raise ValueError("n must be an integer")
+    n = floor(n)
+    if not n >= 0:
+        raise ValueError("n must be non-negative")
+    x = 8 * n + 1
+    return sqrt(x) == floor(sqrt(x))
+
 def postponed_sieve():
     """A prime generator from http://stackoverflow.com/a/10733621."""
 
