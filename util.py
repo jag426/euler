@@ -112,6 +112,39 @@ def gcd(a, b):
         a, b = b, a % b
     return abs(a)
 
+def is_pentagonal(n):
+    """Return whether n is a pentagonal number for integer n >= 0.
+       n is a pentagonal number when sqrt(24n+1) = 5 (mod 6).
+
+    >>> is_pentagonal(0)
+    False
+    >>> is_pentagonal(1)
+    True
+    >>> is_pentagonal(925)
+    True
+    >>> is_pentagonal(1500002500000)
+    False
+    >>> is_pentagonal(1500002500001)
+    True
+    >>> is_pentagonal(-1)
+    Traceback (most recent call last):
+        ...
+    ValueError: n must be non-negative
+    >>> is_pentagonal(2.5)
+    Traceback (most recent call last):
+        ...
+    ValueError: n must be an integer
+    """
+
+    from math import floor, sqrt
+    if floor(n) != n:
+        raise ValueError("n must be an integer")
+    n = floor(n)
+    if not n >= 0:
+        raise ValueError("n must be non-negative")
+    s = sqrt(24*n + 1)
+    return s == floor(s) and s % 6 == 5
+
 def is_prime(n):
     """Naive primality test. Return whether n is prime for integer n >= 2.
 
