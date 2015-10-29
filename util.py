@@ -299,6 +299,33 @@ def prime_factorization(n):
         prime_factorization.append(n)
     return prime_factorization
 
+def prime_factors(n):
+    """A set of the prime factors of n for any positive integer n.
+
+    >>> prime_factors(1)
+    set()
+    >>> prime_factors(2)
+    {2}
+    >>> prime_factors(17.0)
+    {17}
+    >>> prime_factors(49)
+    {7}
+    >>> prime_factors(360) == {2, 3, 5}
+    True
+    >>> prime_factors(1234567890987654321) == {3, 7, 19, 928163, 1111211111}
+    True
+    >>> prime_factors(0)
+    Traceback (most recent call last):
+        ...
+    ValueError: n must be positive
+    >>> prime_factors(2**0.5)
+    Traceback (most recent call last):
+        ...
+    ValueError: n must be an integer
+    """
+
+    return set(prime_factorization(n))
+
 primes = postponed_sieve
 
 def primes_to(n):
