@@ -214,6 +214,29 @@ def is_triangle(n):
     x = 8 * n + 1
     return sqrt(x) == floor(sqrt(x))
 
+def phi(n):
+    """Euler's totient function. Return phi(n) for integer n > 0.
+
+    >>> phi(1)
+    1
+    >>> phi(19)
+    18
+    >>> phi(1234567890987654321)
+    445557856152882240
+    >>> phi(0)
+    Traceback (most recent call last):
+        ...
+    ValueError: n must be positive
+    >>> phi(2.5)
+    Traceback (most recent call last):
+        ...
+    ValueError: n must be an integer
+    """
+
+    from functools import reduce
+    from math import floor
+    return reduce(lambda acc, p: acc*(p-1), prime_factorization(n), 1)
+
 def postponed_sieve():
     """A prime generator from http://stackoverflow.com/a/10733621."""
 
