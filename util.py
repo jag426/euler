@@ -214,6 +214,42 @@ def is_triangle(n):
     x = 8 * n + 1
     return sqrt(x) == floor(sqrt(x))
 
+def lcm(a, b):
+    """Return the least common multiple of a and b for integers and b not both
+       0.
+
+    >>> lcm(54, 24)
+    216
+    >>> lcm(48, -180)
+    720
+    >>> lcm(-37, 600)
+    22200
+    >>> lcm(-13, -13)
+    13
+    >>> lcm(20, 100)
+    100
+    >>> lcm(624129, 2061517)
+    68030061
+    >>> lcm(0, 6)
+    0
+    >>> lcm(6, 0)
+    0
+    >>> lcm(0, 0)
+    Traceback (most recent call last):
+        ...
+    ValueError: a or b must not be 0
+    >>> lcm(5.5, 11)
+    Traceback (most recent call last):
+        ...
+    ValueError: a must be an integer
+    >>> lcm(0, 1.5)
+    Traceback (most recent call last):
+        ...
+    ValueError: b must be an integer
+    """
+
+    return abs(a * b // gcd(a, b))
+
 def phi(n):
     """Euler's totient function. Return phi(n) for integer n > 0.
 
