@@ -255,10 +255,12 @@ def phi(n):
 
     >>> phi(1)
     1
+    >>> phi(8)
+    4
     >>> phi(19)
     18
     >>> phi(1234567890987654321)
-    445557856152882240
+    668336784229323360
     >>> phi(0)
     Traceback (most recent call last):
         ...
@@ -271,7 +273,7 @@ def phi(n):
 
     from functools import reduce
     from math import floor
-    return reduce(lambda acc, p: acc*(p-1), prime_factorization(n), 1)
+    return reduce(lambda acc, p: acc*(p-1)//p, prime_factors(n), n)
 
 def postponed_sieve():
     """A prime generator from http://stackoverflow.com/a/10733621."""
